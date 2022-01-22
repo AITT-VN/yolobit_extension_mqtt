@@ -23,7 +23,7 @@ Blockly.Blocks["yolobit_mqtt_connect_default_servers"] = {
       colour: "#e65722",
       nextStatement: null,
       tooltip: "Kết nối đến server MQTT được chọn",
-      message0: "kết nối đến server MQTT %1 với username %2 key %3 %4",
+      message0: "kết nối đến server %1 với username %2 key %3 %4",
       previousStatement: null,
       args0: [
         {
@@ -49,7 +49,7 @@ Blockly.Blocks["yolobit_mqtt_connect_custom_servers"] = {
       colour: "#e65722",
       nextStatement: null,
       tooltip: "Kết nối đến server MQTT được chọn",
-      message0: "kết nối đến server MQTT %1 port %2 username %3 key %4 %5",
+      message0: "kết nối đến server %1 port %2 username %3 password %4 %5",
       previousStatement: null,
       args0: [
         { type: "input_value", name: "SERVER", check: "String" },
