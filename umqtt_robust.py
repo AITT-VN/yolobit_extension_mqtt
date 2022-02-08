@@ -1,5 +1,5 @@
 import utime
-from umqtt.simple import *
+from umqtt_simple import *
 
 class MQTTClient(MQTTClient):
 

@@ -2,8 +2,8 @@
     "name": "MQTT",
     "description": "Mục mở rộng hỗ trợ giao tiếp MQTT cho ứng dụng IoT",
     "libs": [
-        "umqtt.robust.py",
-        "umqtt.simple.py",
+        "umqtt_robust.py",
+        "umqtt_simple.py",
         "mqtt.py"
     ],
     "blocks": [
