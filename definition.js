@@ -203,8 +203,10 @@ Blockly.Python['yolobit_mqtt_on_receive_message'] = function(block) {
   var variables = workspace.getAllVariables() || [];
   for (var i = 0, variable; variable = variables[i]; i++) {
     varName = variable.name;
-    globals.push(Blockly.Python.variableDB_.getName(varName,
-      Blockly.Variables.NAME_TYPE));
+    if (Blockly.Python.variableDB_.getName(varName, Blockly.Variables.NAME_TYPE) != variable_message) {
+      globals.push(Blockly.Python.variableDB_.getName(varName,
+        Blockly.Variables.NAME_TYPE));
+    }
   }
   globals = globals.length ? Blockly.Python.INDENT + 'global ' + globals.join(', ') : '';
 
@@ -231,8 +233,10 @@ Blockly.Python['yolobit_wifi_on_receive_message_from_dashboard'] = function(bloc
   var variables = workspace.getAllVariables() || [];
   for (var i = 0, variable; variable = variables[i]; i++) {
     varName = variable.name;
-    globals.push(Blockly.Python.variableDB_.getName(varName,
-      Blockly.Variables.NAME_TYPE));
+    if (Blockly.Python.variableDB_.getName(varName, Blockly.Variables.NAME_TYPE) != variable_message) {
+      globals.push(Blockly.Python.variableDB_.getName(varName,
+        Blockly.Variables.NAME_TYPE));
+    }
   }
   globals = globals.length ? Blockly.Python.INDENT + 'global ' + globals.join(', ') : '';
 
