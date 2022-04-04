@@ -197,9 +197,21 @@ Blockly.Python['yolobit_mqtt_on_receive_message'] = function(block) {
   var value_topic = Blockly.Python.valueToCode(block, 'TOPIC', Blockly.Python.ORDER_ATOMIC);
   var statements_action = Blockly.Python.statementToCode(block, 'ACTION');
   // TODO: Assemble Python into code variable.
+  var globals = [];
+  var varName;
+  var workspace = block.workspace;
+  var variables = workspace.getAllVariables() || [];
+  for (var i = 0, variable; variable = variables[i]; i++) {
+    varName = variable.name;
+    globals.push(Blockly.Python.variableDB_.getName(varName,
+      Blockly.Variables.NAME_TYPE));
+  }
+  globals = globals.length ? Blockly.Python.INDENT + 'global ' + globals.join(', ') : '';
+
   var cbFunctionName = Blockly.Python.provideFunction_(
     'on_mqtt_message_receive_callback_' + value_topic,
     ['def ' + Blockly.Python.FUNCTION_NAME_PLACEHOLDER_ + '(' + variable_message + '):',
+      globals,
       statements_action || Blockly.Python.PASS
     ]);
   
@@ -213,9 +225,21 @@ Blockly.Python['yolobit_wifi_on_receive_message_from_dashboard'] = function(bloc
   var dropdown_channel = block.getFieldValue('CHANNEL');
   var statements_action = Blockly.Python.statementToCode(block, 'ACTION');
   // TODO: Assemble Python into code variable.
+  var globals = [];
+  var varName;
+  var workspace = block.workspace;
+  var variables = workspace.getAllVariables() || [];
+  for (var i = 0, variable; variable = variables[i]; i++) {
+    varName = variable.name;
+    globals.push(Blockly.Python.variableDB_.getName(varName,
+      Blockly.Variables.NAME_TYPE));
+  }
+  globals = globals.length ? Blockly.Python.INDENT + 'global ' + globals.join(', ') : '';
+
   var cbFunctionName = Blockly.Python.provideFunction_(
     'on_wifi_message_receive_callback_' + block.id,
     ['def ' + Blockly.Python.FUNCTION_NAME_PLACEHOLDER_ + '(' + variable_message + '):',
+      globals,
       statements_action || Blockly.Python.PASS
     ]);
 
