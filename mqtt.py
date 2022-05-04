@@ -1,3 +1,4 @@
+
 import time
 from umqtt_robust import MQTTClient
 import ubinascii
@@ -15,6 +16,8 @@ class MQTT:
         self.topic_prefix = ''
         self.message = ''
         self.topic = ''
+        self.wifi_ssid = ''
+        self.wifi_password = ''
         self.callbacks = {}
 
     def __on_receive_message(self, topic, msg):
@@ -23,8 +26,11 @@ class MQTT:
         topic = topic.decode('ascii')
         if callable(self.callbacks.get(topic)):
             self.callbacks.get(topic)(msg)
+            
 
     def connect_wifi(self, ssid, password, wait_for_connected=True):
+        self.wifi_ssid = ssid
+        self.wifi_password = password
         say('Connecting to WiFi...')
         self.station = network.WLAN(network.STA_IF)
         if self.station.active():
@@ -78,6 +84,13 @@ class MQTT:
     def check_message(self):
         if self.client == None:
             return
+        if not self.wifi_connected():
+            say('WiFi disconnected. Reconnecting...')
+            self.connect_wifi(self.wifi_ssid, self.wifi_password)
+            self.client.connect()
+            #self.connect_broker()
+            self.resubscribe()         
+
         self.client.check_msg()
     
     def on_receive_message(self, topic, callback):
@@ -87,6 +100,11 @@ class MQTT:
 
         self.callbacks[topic] = callback
         self.client.subscribe(topic)
+    
+    def resubscribe(self):
+        for key in self.callbacks.keys():
+            self.client.subscribe(key)
+            #print(key)
     
     def publish(self, topic, message):
         if self.client == None:
@@ -115,4 +133,5 @@ def unit_test():
 
 if __name__ == '__main__':
     unit_test()
+
 
