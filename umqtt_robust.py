@@ -18,7 +18,8 @@ class MQTTClient(MQTTClient):
 
     def reconnect(self):
         i = 0
-        while 1:
+        start_time = utime.ticks_ms()
+        while (utime.ticks_ms() - start_time) < 10000: # reconnect in 10s
             try:
                 return super().connect(False)
             except OSError as e:
@@ -27,7 +28,8 @@ class MQTTClient(MQTTClient):
                 self.delay(i)
 
     def publish(self, topic, msg, retain=False, qos=0):
-        while 1:
+        start_time = utime.ticks_ms()
+        while (utime.ticks_ms() - start_time) < 10000: # try in 10s max
             try:
                 return super().publish(topic, msg, retain, qos)
             except OSError as e:
@@ -35,7 +37,8 @@ class MQTTClient(MQTTClient):
             self.reconnect()
 
     def wait_msg(self):
-        while 1:
+        start_time = utime.ticks_ms()
+        while (utime.ticks_ms() - start_time) < 10000: # try in 10s max
             try:
                 return super().wait_msg()
             except OSError as e:
